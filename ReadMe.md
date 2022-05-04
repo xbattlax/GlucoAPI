@@ -83,6 +83,35 @@ Python 3.8.9
 > uvicorn main:app --reload
 
 
+## deploy on EC2
+```bash
+SSH into the ec2 instance and run following commands
+
+sudo yum update -y
+ 
+sudo yum install git -y
+ 
+git version
+
+# If you are running this for first time.
+git clone https://github.com/xbattlax/GlucoAPI.git
+
+cd GlucoAPI
+
+# or 
+
+git pull https://github.com/Valurank/initial-scoring-api.git
+
+
+# if new EC2 instance
+chmod 777 install-dependencies.sh
+./dependencies.sh
+
+# Use this script to deploy or redeploy.
+chmod 777 deploy.sh
+./deploy.sh
+
+```
 
 
 

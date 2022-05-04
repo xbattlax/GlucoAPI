@@ -1,9 +1,6 @@
 import json
-
 from fastapi import FastAPI
-import os
 from supabase import create_client, Client
-import hashlib
 
 app = FastAPI()
 
