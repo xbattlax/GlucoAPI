@@ -70,3 +70,4 @@ async def get_gluco(data: dict):
         'created_at', data["date2"]).execute()
     print(result)
     return {"message": "Success", "data": result.data}
+
