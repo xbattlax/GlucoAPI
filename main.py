@@ -77,4 +77,4 @@ async def get_gluco(data: dict):
     result = supabase.table("user").select("*").eq("id", uuid).execute()
     if not result.data:
         return {"message": "User not found"}
-    return supabase.table("glucose_record").select("*").eq("user_id", uuid).order_by('created_at', 'desc').lte('created_at', data["date"]).limit(1).execute()
+    return supabase.table("glucose_record").select("*").eq("user_id", uuid).order('created_at', desc=True).lte('created_at', data["date"]).limit(1).execute()
