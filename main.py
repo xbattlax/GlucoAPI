@@ -2,7 +2,21 @@ import json
 from fastapi import FastAPI
 from supabase import create_client, Client
 
-app = FastAPI()
+from fastapi.middleware import Middleware
+from fastapi.middleware.cors import CORSMiddleware
+
+middleware = [
+    Middleware(
+        CORSMiddleware,
+        allow_origins=['*'],
+        allow_credentials=True,
+        allow_methods=['*'],
+        allow_headers=['*']
+    )
+]
+app = FastAPI(middleware=middleware)
+
+
 
 url: str = "https://wijashggfgbvwgbwzemd.supabase.co"
 key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpamFzaGdnZmdidndnYnd6ZW1kIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDc5NzI1ODYsImV4cCI6MTk2MzU0ODU4Nn0.D3ZMH507iZXgO3hvVTY6rZAXuC9iUfGb25j7YUiuy5I"
@@ -66,9 +80,8 @@ async def get_gluco(data: dict):
     result = supabase.table("user").select("*").eq("id", uuid).execute()
     if not result.data:
         return {"message": "User not found"}
-    result = supabase.table("glucose_record").select("*").eq("user_id", uuid).gte('created_at', data["date1"]).lte(
-        'created_at', data["date2"]).execute()
-    print(result)
+    result = supabase.table("glucose_record").select("*").eq("user_id", uuid).gte('created_at', data["date"]).lte(
+        'created_at', data["dateNow"]).execute()
     return {"message": "Success", "data": result.data}
 
 @app.post('/get_recent_glucose_record')
