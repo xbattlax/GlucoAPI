@@ -91,3 +91,31 @@ async def get_gluco(data: dict):
     if not result.data:
         return {"message": "User not found"}
     return supabase.table("glucose_record").select("*").eq("user_id", uuid).order('created_at', desc=True).lte('created_at', data["date"]).limit(1).execute()
+
+@app.post('/add_rdv')
+async def add_rdv(data: dict):
+    uuid = data["uuid"]
+    result = supabase.table("user").select("*").eq("id", uuid).execute()
+    if not result.data:
+        return {"message": "User not found"}
+    result, error = supabase.table("rdv_record").insert(
+        {"user_id": uuid, "dateRdv": data["date"], "textRdv": data["textRdv"]}).execute()
+    if error:
+        return {"message": error}
+    return {"message": "Success"}
+
+@app.post('/get_rdv_records')
+async def get_rdv(data: dict):
+    uuid = data["uuid"]
+    result = supabase.table("user").select("*").eq("id", uuid).execute()
+    if not result.data:
+        return {"message": "User not found"}
+    result = supabase.table("rdv_record").select("*").eq("user_id", uuid).gte('dateRdv', data["date"]).execute()
+    return {"message": "Success", "data": result.data}
+
+
+
+
+
+
+
