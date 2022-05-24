@@ -54,7 +54,7 @@ async def login(data: dict):
     result = supabase.table("user").select("*").eq("email", data["email"]).execute()
     if result.data:
         if result.data[0]["password"] == data["password"]:
-            return {"message": "Success", "uuid": result.data[0]["id"]}
+            return {"message": "Success", "data" :result.data[0]}
         else:
             return {"message": "Wrong password"}
     else:
