@@ -80,10 +80,10 @@ async def add_sleep(data: dict):
     if not result.data:
         return {"message": "User not found"}
     result, error = supabase.table("sleep_record").insert(
-        {"user_id": uuid, "hours_sleep": data["hours_sleep"], "quality": data["quality"]}).execute()
+        {"user_id": uuid, "hours_sleep": data["hours_sleep"], "quality": data["quality"], "date": data["date"]}).execute()
     if error:
         return {"message": error}
-    return {"message": "Success"}
+    return {"message": "Success", "data": result.data}
 
 @app.post('/get_sleep_record')
 async def get_sleep(data: dict):
@@ -91,8 +91,8 @@ async def get_sleep(data: dict):
     result = supabase.table("user").select("*").eq("id", uuid).execute()
     if not result.data:
         return {"message": "User not found"}
-    result = supabase.table("sleep_record").select("*").eq("user_id", uuid).lte('created_at', data["date"]).order('created_at', desc=True).limit(1).execute()
-    return {"message": "Success", "data": result.data}
+    result = supabase.table("sleep_record").select("*").eq("user_id", uuid).lte('date', data["date"]).order('created_at', desc=True).limit(1).execute()
+    return {"message": "Success", "data": result}
 
 @app.post('/get_glucose_records')
 async def get_gluco(data: dict):
