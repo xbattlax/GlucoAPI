@@ -79,8 +79,6 @@ async def add_sleep(data: dict):
     result = supabase.table("user").select("*").eq("id", uuid).execute()
     if not result.data:
         return {"message": "User not found"}
-
-    if
     result, error = supabase.table("sleep_record").insert(
         {"user_id": uuid, "hours_sleep": data["hours_sleep"], "quality": data["quality"]}).execute()
     if error:
