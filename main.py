@@ -18,7 +18,7 @@ app = FastAPI(middleware=middleware)
 
 
 
-url: str = "https://wijashggfgbvwgbwzemd.supabase.co"
+url: str = "https://.supabase.co"
 key: str = ""
 supabase: Client = create_client(url, key)
 
