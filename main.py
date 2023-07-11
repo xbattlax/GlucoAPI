@@ -19,7 +19,7 @@ app = FastAPI(middleware=middleware)
 
 
 url: str = "https://wijashggfgbvwgbwzemd.supabase.co"
-key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpamFzaGdnZmdidndnYnd6ZW1kIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDc5NzI1ODYsImV4cCI6MTk2MzU0ODU4Nn0.D3ZMH507iZXgO3hvVTY6rZAXuC9iUfGb25j7YUiuy5I"
+key: str = ""
 supabase: Client = create_client(url, key)
 
 
